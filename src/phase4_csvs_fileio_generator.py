@@ -1,7 +1,7 @@
 """
-CargoSense -- Phase 4: Synthetic Operational Dataset Generator
+CargoSense -- Phase 4:  OperationalGenerator
 =============================================================
-This module generates the completely new synthetic operational dataset for
+
 CargoSense: A Data-Driven Opportunity Detection Engine for PTL-to-FTL Conversion.
 
 Ecosystem Scope:
@@ -33,9 +33,7 @@ from typing import Dict, List, Tuple, Any, Optional
 import numpy as np
 import pandas as pd
 
-# ---------------------------------------------------------------------------
 # GLOBAL CONSTANTS & CALENDAR DEFINITIONS
-# ---------------------------------------------------------------------------
 RANDOM_SEED = 42
 
 # 90 Calendar Days: 2024-01-01 through 2024-03-30 (Q1 2024 leap year)
