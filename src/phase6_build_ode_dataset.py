@@ -1,7 +1,7 @@
 """
 CargoSense -- Phase 6: Build the ODE (Opportunity Detection Engine) Dataset
 ===========================================================================
-Constructs `data/processed/ode_opportunities.csv` from the 14-table synthetic
+Constructs `data/processed/ode_opportunities.csv` from the 14-table
 operational ecosystem generated in Phase 4 and audited in Phase 5.
 
 Row Definition:
@@ -73,9 +73,7 @@ from typing import Dict, List, Tuple, Optional
 import numpy as np
 import pandas as pd
 
-# ---------------------------------------------------------------------------
 # Configuration
-# ---------------------------------------------------------------------------
 RANDOM_SEED = 42
 FTL_THRESHOLD = 0.85  # 85% utilization on BOTH weight and volume
 VOLUME_CORRECTION_FACTOR = 3.0  # Scale unit_volume_m3 by this factor
@@ -85,9 +83,7 @@ SYNTHETIC_DIR = Path("data/synthetic")
 OUTPUT_DIR = Path("data/processed")
 REPORT_DIR = Path("reports")
 
-# ---------------------------------------------------------------------------
 # Data Loading
-# ---------------------------------------------------------------------------
 
 def load_all_tables(base_dir: Path) -> Dict[str, pd.DataFrame]:
     """Load all 14 synthetic operational tables."""
@@ -148,9 +144,7 @@ def parse_timestamps(tables: Dict[str, pd.DataFrame]) -> None:
         ).dt.date
 
 
-# ---------------------------------------------------------------------------
 # Volume Correction
-# ---------------------------------------------------------------------------
 
 def apply_volume_correction(tables: Dict[str, pd.DataFrame], factor: float) -> None:
     """
@@ -213,9 +207,7 @@ def apply_volume_correction(tables: Dict[str, pd.DataFrame], factor: float) -> N
     print(f"    Saved corrected products to {OUTPUT_DIR / 'products.csv'}")
 
 
-# ---------------------------------------------------------------------------
 # Step 1: Identify Eligible Candidate Shipments
-# ---------------------------------------------------------------------------
 
 def identify_eligible_candidates(tables: Dict[str, pd.DataFrame]) -> pd.DataFrame:
     """
@@ -276,9 +268,7 @@ def identify_eligible_candidates(tables: Dict[str, pd.DataFrame]) -> pd.DataFram
     return candidates
 
 
-# ---------------------------------------------------------------------------
 # Step 2: Build Shipment Feature Matrix
-# ---------------------------------------------------------------------------
 
 def build_shipment_features(candidates: pd.DataFrame, tables: Dict[str, pd.DataFrame]) -> pd.DataFrame:
     """
@@ -355,9 +345,7 @@ def build_shipment_features(candidates: pd.DataFrame, tables: Dict[str, pd.DataF
     return candidates
 
 
-# ---------------------------------------------------------------------------
 # Step 3: Compute Compatible Available Cargo (Order-Backed)
-# ---------------------------------------------------------------------------
 
 def compute_order_backed_cargo(
     candidate_row: pd.Series,
@@ -456,9 +444,7 @@ def compute_order_backed_cargo(
     return total_weight, total_volume, n_lines, total_qty
 
 
-# ---------------------------------------------------------------------------
 # Step 4: Generate Candidate SKU Combinations
-# ---------------------------------------------------------------------------
 
 def get_available_skus_for_route(
     route_id: str,
@@ -597,9 +583,7 @@ def generate_candidates_for_shipment(
     return candidates
 
 
-# ---------------------------------------------------------------------------
-# Step 5: Simulate Subsequent Operational Events & Derive Became_FTL Target
-# ---------------------------------------------------------------------------
+# Step 5: Test Simulate Subsequent Operational Events & Derive Became_FTL Target
 
 def simulate_subsequent_operational_events(
     candidates_df: pd.DataFrame,
@@ -854,9 +838,7 @@ def derive_became_ftl_from_events(
     return pd.DataFrame(results)
 
 
-# ---------------------------------------------------------------------------
 # Step 6: Demand History Features
-# ---------------------------------------------------------------------------
 
 def compute_demand_features(candidates: pd.DataFrame, tables: Dict[str, pd.DataFrame]) -> pd.DataFrame:
     """
@@ -905,9 +887,7 @@ def compute_demand_features(candidates: pd.DataFrame, tables: Dict[str, pd.DataF
     return pd.DataFrame(results)
 
 
-# ---------------------------------------------------------------------------
 # Step 7: Temporal Features
-# ---------------------------------------------------------------------------
 
 def compute_temporal_features(candidates: pd.DataFrame) -> pd.DataFrame:
     """
@@ -925,9 +905,7 @@ def compute_temporal_features(candidates: pd.DataFrame) -> pd.DataFrame:
     return candidates
 
 
-# ---------------------------------------------------------------------------
 # Step 8: Validation
-# ---------------------------------------------------------------------------
 
 def validate_dataset(
     df: pd.DataFrame,
